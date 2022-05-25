@@ -14,7 +14,7 @@ export class MonthlyPremiumComponent implements OnInit {
     name: ["", [Validators.required, Validators.maxLength(20)]],
     dob: ["", [Validators.required, this.invalidAge]], //custom validator used for age restriction
     age: ["", []],
-    deathCoverAmount: ["", [Validators.required, Validators.maxLength(3)]],
+    deathCoverAmount: ["", [Validators.required, Validators.maxLength(8)]],
     occupation: ["", [Validators.required]]
   });
 
@@ -96,11 +96,17 @@ export class MonthlyPremiumComponent implements OnInit {
       return true;
     }
 
-    e.preventDefault();
-    return false;
+    this.disableKeypress(e);
   }
   numberLimit(e) {
-    console.log('from numlimit: ' + e);
+    
+    var regex = new RegExp("^[0-9]+$");
+    var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+    if (regex.test(str)) {
+      return true;
+    }
+
+    this.disableKeypress(e);
   }
 
   disableKeypress(e) {

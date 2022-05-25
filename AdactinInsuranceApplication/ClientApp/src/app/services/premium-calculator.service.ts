@@ -26,17 +26,14 @@ export class PremiumCalculatorService {
     this.url = this.baseUrl + "/PremiumCalculation/CalculatePremium";
     this.data = {
       'DeathCoverAmount': parseFloat(inputData.deathCoverAmount),
-      'RatingID': parseInt(inputData.occupation),
+      'OccupationId': parseInt(inputData.occupation),
       'Age': parseInt(inputData.age)
     };
     const _headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Accept': 'application/json'
-      //Authorization: 'my-auth-token'
     });
      
-    console.log(this.data);
-
     return this.http.post(this.url,this.data, { headers: _headers })
       .pipe(
         catchError(e => throwError(this.handleError(e)))

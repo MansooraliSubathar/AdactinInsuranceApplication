@@ -1,11 +1,15 @@
-<br /><br />
-<h3>Monthly Premium Calculator!</h3>
+<br />
+
+<h1 style="background-color:Highlight">Adactin Insurance Application</h1>
+<br />
+
+<h3>Monthly Premium Calculator!</h3><hr/>
 <div class="container">
   <form [formGroup]="_form">
     <div class="row formGroup">
       <div class="col-md-4">
         <label>Name : </label>
-        <input type="text" #name class="form-control"  (input)="alphabetOnly($event)" (keypress)="alphabetOnly($event)" (paste)="disableKeypress($event)"
+        <input type="text" #name class="form-control" (input)="alphabetOnly($event)" (keypress)="alphabetOnly($event)" (paste)="disableKeypress($event)"
                placeholder="Please enter name" formControlName="name" />
         <div *ngIf="submitted && _form.get('name').errors !=null">
           <div *ngIf="_form.get('name')?.hasError('required')" class="alert alert-danger">
@@ -31,19 +35,19 @@
       </div>
       <br />
       <div class="col-md-4">
-        <label >Age(in Yrs) :</label>
-          <label class="form-control" formControlName="age"> {{_age}}</label>
+        <label>Age(in Yrs) :</label>
+        <label class="form-control" formControlName="age"> {{_age}}</label>
       </div>
       <br />
       <div class="col-md-4">
         <label>Death Cover Amount : </label>
-        <input type="number" #deathCoverAmount class="form-control"  placeholder="Please enter deathCoverAmount" formControlName="deathCoverAmount" />
+        <input type="text" #deathCoverAmount class="form-control" (input)="numberLimit($event)" (keypress)="numberLimit($event)" placeholder="Please enter deathCoverAmount" formControlName="deathCoverAmount" />
         <div *ngIf="submitted && _form.get('deathCoverAmount').errors !=null">
           <div *ngIf="_form.get('deathCoverAmount')?.hasError('required')" class="alert alert-danger">
             Death Cover Amount required
           </div>
           <div *ngIf="_form.get('deathCoverAmount')?.hasError('maxlength')" class="alert alert-danger">
-            Maximum limit 10 digits
+            Enter number between 0 to 99999999
           </div>
         </div>
       </div>
@@ -53,7 +57,7 @@
 
         <select class="form-control" formControlName="occupation" (change)="CalculatePremium()">
           <option value="">-Select-</option>
-          <option *ngFor="let data of OccupationList" [value]="data.ratingID">{{data.name|json}}</option>
+          <option *ngFor="let data of OccupationList" [value]="data.id">{{data.name}}</option>
         </select>
         <div *ngIf="submitted && _form.get('occupation').errors !=null">
           <div *ngIf="_form.get('occupation')?.hasError('required')" class="alert alert-danger">
@@ -62,7 +66,7 @@
         </div>
       </div>
     </div> <br /> <br />
-    <div >
+    <div>
       <button type="submit" (click)="CalculatePremium()" class="btn btn-sm btn-primary">Calculate Premium</button>
     </div> <br />
     <div>
