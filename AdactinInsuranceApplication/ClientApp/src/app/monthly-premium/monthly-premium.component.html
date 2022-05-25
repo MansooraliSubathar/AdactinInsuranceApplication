@@ -1,0 +1,72 @@
+<br /><br />
+<h3>Monthly Premium Calculator!</h3>
+<div class="container">
+  <form [formGroup]="_form">
+    <div class="row formGroup">
+      <div class="col-md-4">
+        <label>Name : </label>
+        <input type="text" #name class="form-control"  (input)="alphabetOnly($event)" (keypress)="alphabetOnly($event)" (paste)="disableKeypress($event)"
+               placeholder="Please enter name" formControlName="name" />
+        <div *ngIf="submitted && _form.get('name').errors !=null">
+          <div *ngIf="_form.get('name')?.hasError('required')" class="alert alert-danger">
+            Name Required
+          </div>
+          <div *ngIf="_form.get('name')?.hasError('maxlength')" class="alert alert-danger">
+            Maximum limit 20 chars
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="col-md-4">
+        <label>DOB(mm/dd/yyyy) : </label>
+        <input type="date" #dob class="form-control" (input)="disableKeypress($event)" (keypress)="disableKeypress($event)" (change)="CalculateAge(dob.value)" placeholder="Please enter dob" formControlName="dob" />
+        <div *ngIf="submitted &&  _form.get('dob').errors !=null">
+          <div *ngIf="_form.get('dob')?.hasError('required')" class="alert alert-danger">
+            DOB Required
+          </div>
+          <div *ngIf="_form.get('dob')?.hasError('AgeRestriction')" class="alert alert-danger">
+            Age should between 18 to 99
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="col-md-4">
+        <label >Age(in Yrs) :</label>
+          <label class="form-control" formControlName="age"> {{_age}}</label>
+      </div>
+      <br />
+      <div class="col-md-4">
+        <label>Death Cover Amount : </label>
+        <input type="number" #deathCoverAmount class="form-control"  placeholder="Please enter deathCoverAmount" formControlName="deathCoverAmount" />
+        <div *ngIf="submitted && _form.get('deathCoverAmount').errors !=null">
+          <div *ngIf="_form.get('deathCoverAmount')?.hasError('required')" class="alert alert-danger">
+            Death Cover Amount required
+          </div>
+          <div *ngIf="_form.get('deathCoverAmount')?.hasError('maxlength')" class="alert alert-danger">
+            Maximum limit 10 digits
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="col-md-4">
+        <label>Occupation : </label>
+
+        <select class="form-control" formControlName="occupation" (change)="CalculatePremium()">
+          <option value="">-Select-</option>
+          <option *ngFor="let data of OccupationList" [value]="data.ratingID">{{data.name|json}}</option>
+        </select>
+        <div *ngIf="submitted && _form.get('occupation').errors !=null">
+          <div *ngIf="_form.get('occupation')?.hasError('required')" class="alert alert-danger">
+            Occupation Required
+          </div>
+        </div>
+      </div>
+    </div> <br /> <br />
+    <div >
+      <button type="submit" (click)="CalculatePremium()" class="btn btn-sm btn-primary">Calculate Premium</button>
+    </div> <br />
+    <div>
+      <label *ngIf="outputLable!=null" class="alert alert-info">{{outputLable}} <b> {{monthlyPremiumAmount | number : '1.0-2'}} </b></label>
+    </div>
+  </form>
+</div>
