@@ -14,7 +14,7 @@ export class MonthlyPremiumComponent implements OnInit {
     name: ["", [Validators.required, Validators.maxLength(20)]],
     dob: ["", [Validators.required, this.invalidAge]], //custom validator used for age restriction
     age: ["", []],
-    deathCoverAmount: ["", [Validators.required, Validators.maxLength(8)]],
+    deathCoverAmount: ["", [Validators.required, Validators.maxLength(8), Validators.min(1)]], 
     occupation: ["", [Validators.required]]
   });
 
@@ -44,7 +44,7 @@ export class MonthlyPremiumComponent implements OnInit {
   CalculatePremium() {
     this.submitted = true;
     this.monthlyPremiumAmount = null;
-
+   
     if (this._form.status != "VALID")
       return false;
 
@@ -91,16 +91,14 @@ export class MonthlyPremiumComponent implements OnInit {
 
   alphabetOnly(e) {  // Accept only alphabets , not special characters 
     var regex = new RegExp("^[a-zA-Z ]+$");
-    var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
-    if (regex.test(str)) {
-      return true;
-    }
-
-    this.disableKeypress(e);
+    this.validateRegex(e, regex);
   }
-  numberLimit(e) {
-    
+  numberLimit(e) {    //Accept only numbers
     var regex = new RegExp("^[0-9]+$");
+    this.validateRegex(e, regex);
+  }
+
+  validateRegex(e, regex) {
     var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
     if (regex.test(str)) {
       return true;

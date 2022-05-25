@@ -1,6 +1,4 @@
-<br />
 
-<h1 style="background-color:Highlight">Adactin Insurance Application</h1>
 <br />
 
 <h3>Monthly Premium Calculator!</h3><hr/>
@@ -46,8 +44,8 @@
           <div *ngIf="_form.get('deathCoverAmount')?.hasError('required')" class="alert alert-danger">
             Death Cover Amount required
           </div>
-          <div *ngIf="_form.get('deathCoverAmount')?.hasError('maxlength')" class="alert alert-danger">
-            Enter number between 0 to 99999999
+          <div *ngIf="_form.get('deathCoverAmount')?.hasError('maxlength') || _form.get('deathCoverAmount')?.hasError('min')" class="alert alert-danger">
+            Enter number between 1 to 99999999
           </div>
         </div>
       </div>
